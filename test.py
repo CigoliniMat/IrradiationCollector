@@ -25,6 +25,15 @@ def read_csv(target):
         list_values_to_return = ['GHI', 'BHI','DHI', 'BNI']
 
         for row in reader:
+            if legend_passed:
+                time_string = row['# Coding: utf-8'] #value like "2025-01-01T00:00:00.0/2025-01-01T01:00:00.0"
+                values = row[None] #irradiation values
+                date = time_string[:10] #date in format YYYY-MM-DD
+                if date not in output:
+                    output[date] = {}
+                for value in list_values_to_return:
+                    output[date][value] = float(values[values_column[value]]) #add check if error in coverting the value
+
             #take the row of the header of the table and find th number of the column where is is the value to return
             if row['# Coding: utf-8'] == '# Observation period':
                 header = list(enumerate(row[None]))
@@ -34,18 +43,8 @@ def read_csv(target):
                         values_column[text[1]] = int(text[0])
                 legend_passed = True
 
-            if legend_passed:
-                time_string = row['# Coding: utf-8'] #value like "2025-01-01T00:00:00.0/2025-01-01T01:00:00.0"
-                values = row[None] #irradiation values
-                date = time_string[:10] #date in format YYYY-MM-DD
-                if date not in output:
-                    output[date] = {}
-                for value in list_values_to_return:
-                    output[date][value] = values[values_column[value]]
-
-            
         #os.remove(target)
-        #delete the file after reading it, to save space in the computer
+        #delete the file after reading it
         return output
 
 def write_db(target, data):
@@ -58,7 +57,7 @@ lat = 45
 start_day = '2024-01-01' #format YYYY-MM-DD
 end_day = '2025-01-01'
 value_intervall = '1day' #options = 1minute, 15minute, 1hour, 1day, 1month
-file_position = 'private/Test.csv' #name and position where the file from the API will be saved
+file_position = 'Example of downloaded file.csv' #name and position where the file from the API will be saved
 
 a = read_csv(file_position)
 print(a)

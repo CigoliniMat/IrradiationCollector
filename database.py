@@ -64,41 +64,30 @@ def modify_location(db_name, id, name=None, latitude=None, longitude=None, descr
     conn.commit()
     conn.close()
 
-def insert_irradiation_data(db_name, id, date, irradiation):
-    """Insert daily irradiation data into the specific location table"""
-    """Date and irradiation can be a list or a single value"""
+def insert_irradiation_data(db_name, id, dict_irradiation):
+    """Insert daily irradiation data into the specific location table
+    example dict_irradiation input=
+    {'2024-01-01': {'GHI': 100, 'DNI': 50, 'DHI': 30, 'BNI': 20},
+    '2024-01-02': {'GHI': 110, 'DNI': 60, 'DHI': 40, 'BNI': 25}}"""
     conn = sqlite3.connect(db_name)
     cursor = conn.cursor()
 
     cursor.execute(f"""
-    CREATE TABLE IF NOT EXISTS location_{id} (
+    CREATE TABLE IF NOT EXISTS daily_irr_{id} (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     date TEXT NOT NULL,
-    irradiation REAL NOT NULL
+    GHI REAL NOT NULL,
+    DNI REAL NOT NULL,
+    DHI REAL NOT NULL,
+    BNI REAL NOT NULL
     );
     """)
 
-    #add check if is list is same length
-    if isinstance(date, list) and isinstance(irradiation, list):
-        for d, ir in zip(date, irradiation):
-            cursor.execute(f'''
-                INSERT INTO location_{id} (date, irradiation)
-                VALUES (?, ?)
-            ''', (d, ir))
-    else:
+    for date, values in dict_irradiation.items():
         cursor.execute(f'''
-            INSERT INTO location_{id} (date, irradiation)
-            VALUES (?, ?)
-        ''', (date, irradiation))
+            INSERT INTO location_{id} (date, GHI, DNI, DHI, BNI)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (date, values['GHI'], values['DNI'], values['DHI'], values['BNI']))
 
     conn.commit()
     conn.close()
-
-
-db_name = 'daily_irradiation.db'
-name = 'impianto2'
-latitude = 45.454545
-longitude = 10.11110
-description = ''
-
-insert_location(db_name, name, latitude, longitude, description)
