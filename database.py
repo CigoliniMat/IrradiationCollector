@@ -64,6 +64,37 @@ def modify_location(db_name, id, name=None, latitude=None, longitude=None, descr
     conn.commit()
     conn.close()
 
+def insert_irradiation_data(db_name, id, date, irradiation):
+    """Insert daily irradiation data into the specific location table"""
+    """Date and irradiation can be a list or a single value"""
+    conn = sqlite3.connect(db_name)
+    cursor = conn.cursor()
+
+    cursor.execute(f"""
+    CREATE TABLE IF NOT EXISTS location_{id} (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    date TEXT NOT NULL,
+    irradiation REAL NOT NULL
+    );
+    """)
+
+    #add check if is list is same length
+    if isinstance(date, list) and isinstance(irradiation, list):
+        for d, ir in zip(date, irradiation):
+            cursor.execute(f'''
+                INSERT INTO location_{id} (date, irradiation)
+                VALUES (?, ?)
+            ''', (d, ir))
+    else:
+        cursor.execute(f'''
+            INSERT INTO location_{id} (date, irradiation)
+            VALUES (?, ?)
+        ''', (date, irradiation))
+
+    conn.commit()
+    conn.close()
+
+
 db_name = 'daily_irradiation.db'
 name = 'impianto2'
 latitude = 45.454545
