@@ -91,3 +91,18 @@ def insert_irradiation_data(db_name, id, dict_irradiation):
 
     conn.commit()
     conn.close()
+
+def get_irradiation_data(db_name, id, start_date=None, end_date=None, all=False):
+    """Retrieve irradiation data for a specific location."""
+    conn = sqlite3.connect(db_name)
+    cursor = conn.cursor()
+
+    if all:
+        cursor.execute(f'SELECT * FROM daily_irr_{id}')
+        rows = cursor.fetchall()
+
+    conn.close()
+    return rows
+
+a=get_irradiation_data('irradiation.db', 1, all=True)
+print(a)
