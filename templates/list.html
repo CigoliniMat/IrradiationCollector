@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Saved locations</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f7fa;
+            padding: 2rem;
+            color: #333;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            max-width: 400px;
+            padding: 0.5rem 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        button {
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            background-color: #333;
+            color: #e0e0e0;
+            padding: 1rem;
+        }
+        .radio-group {
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            background: #fff;
+            overflow: hidden;
+        }
+
+        .radio-container {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .radio-container:last-child {
+            border-bottom: none;
+        }
+
+        .radio-container:hover {
+            background-color: #f9f9f9;
+        }
+
+        .radio-container input {
+            margin-right: 1rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+    </style>
+</head>
+
+<body>
+    <h1>Select the location</h1>
+    <input type="text" id="search" placeholder="Search options...">
+
+    <form action="/select_location" method="post">
+        <div class="radio-group" id="radioGroup">
+            {% for location in locations_list %}
+                <label class="radio-container">
+                    <input type="radio" name="selection" value="{{ location.ID }}">
+                    <strong>{{location.name}}</strong>
+                </label>
+            {% endfor %}
+        </div>
+
+        <button type="submit">Go to irradiation</button>
+        <button type="button" onclick="window.location.href='/add_location'">Add new location</button>
+        <button type="button" onclick="window.location.href='/update_all'">Update all location</button>
+    </form>
+
+    <script>
+        const searchInput = document.getElementById('search');
+        const radioGroup = document.getElementById('radioGroup');
+        const radios = radioGroup.querySelectorAll('.radio-container');
+    
+        searchInput.addEventListener('input', () => {
+          const query = searchInput.value.toLowerCase();
+    
+          radios.forEach(radio => {
+            const labelText = radio.textContent.toLowerCase();
+            if (labelText.includes(query)) {
+              radio.classList.remove('hidden');
+            } else {
+              radio.classList.add('hidden');
+            }
+          });
+        });
+      </script>
+
+</body>
+</html>
+
