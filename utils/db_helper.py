@@ -104,5 +104,13 @@ def get_irradiation_data(db_name, id, start_date=None, end_date=None, all=False)
     conn.close()
     return rows
 
-a=get_irradiation_data('irradiation.db', 1, all=True)
-print(a)
+def get_location_list(db_name):
+    """Retrieve all locations from the database."""
+    conn = sqlite3.connect(db_name)
+    cursor = conn.cursor()
+
+    cursor.execute('SELECT * FROM locations')
+    rows = cursor.fetchall()
+
+    conn.close()
+    return rows
