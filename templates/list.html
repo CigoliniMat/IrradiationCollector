@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Saved locations</title>
@@ -28,6 +29,7 @@
             color: #e0e0e0;
             padding: 1rem;
         }
+
         .radio-group {
             border: 1px solid #e0e0e0;
             border-radius: 6px;
@@ -59,7 +61,6 @@
         .hidden {
             display: none;
         }
-
     </style>
 </head>
 
@@ -70,11 +71,16 @@
     <form action="/select_location" method="post">
         <div class="radio-group" id="radioGroup">
             {% for location in locations_list %}
-                <label class="radio-container">
-                    <input type="radio" name="selection" value="{{ location.ID }}">
-                    <strong>{{location.name}}</strong>
-                </label>
+            <label class="radio-container">
+                <input type="radio" name="selection" value="{{ location.ID }}">
+                <strong>{{location.name}}</strong>
+            </label>
             {% endfor %}
+        </div>
+
+        <div class="navigation">
+            <button type="button" id="prevBtn">Previous</button>
+            <button type="button" id="nextBtn">Next</button>
         </div>
 
         <button type="submit">Go to irradiation</button>
@@ -83,24 +89,40 @@
     </form>
 
     <script>
-        const searchInput = document.getElementById('search');
-        const radioGroup = document.getElementById('radioGroup');
-        const radios = radioGroup.querySelectorAll('.radio-container');
-    
-        searchInput.addEventListener('input', () => {
-          const query = searchInput.value.toLowerCase();
-    
-          radios.forEach(radio => {
-            const labelText = radio.textContent.toLowerCase();
-            if (labelText.includes(query)) {
-              radio.classList.remove('hidden');
-            } else {
-              radio.classList.add('hidden');
-            }
-          });
-        });
-      </script>
+        const page_elements = 2
+        const radio_group = document.getElementById('radioGroup');
+        const search_input = document.getElementById('search');
+        const radios = radio_group.querySelectorAll('.radio-container');
+
+        function filter_page() {
+            const query = search_input.value.toLowerCase();
+            let counter = 0
+            radios.forEach(radio => {
+                const label_text = radio.textContent.toLowerCase();
+                if (label_text.includes(query)) {
+                    radio.classList.remove('hidden');
+
+                    if (counter >= page_elements) {
+                        radio.classList.add('hidden');
+                    } else { radio.classList.remove('hidden'); counter = counter + 1; }
+
+
+                } else {
+                    radio.classList.add('hidden');
+                }
+
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', filter_page)
+        search_input.addEventListener('input', filter_page)
+
+
+        //page script
+
+
+    </script>
 
 </body>
-</html>
 
+</html>
