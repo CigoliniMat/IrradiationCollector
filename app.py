@@ -7,7 +7,8 @@ def show_list():
     locations_list = [
         {'ID':1,'name': 'Orzivecchi (BS)', 'lat': 10.2555, 'lon':45.4555},
         {'ID':2,'name': 'Settimo Torinese (TO)', 'lat': 10.2555, 'lon':45.4555},
-        {'ID':3,'name': 'Dolcè (VR)', 'lat': 10.2555, 'lon':45.4555}
+        {'ID':3,'name': 'Dolcè (VR)', 'lat': 10.2555, 'lon':45.4555},
+        {'ID':4,'name': 'Settimo Torinese (TO)', 'lat': 10.2555, 'lon':45.4555},
     ]
     return render_template('list.html', locations_list=locations_list)
 
