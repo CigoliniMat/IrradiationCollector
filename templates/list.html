@@ -12,6 +12,14 @@
             color: #333;
         }
 
+        svg {
+            overflow: hidden;
+            vertical-align: middle;
+            width: 1rem;
+            stroke: #333;
+            stroke-width:3;
+        }
+
         .nav_group {
             display: flex;
             flex-direction: row;
@@ -19,8 +27,10 @@
             flex-wrap: wrap;
 
         }
-        
-        .nav_group .page_group {margin-left: 2rem;}
+
+        .nav_group .page_group {
+            margin-left: 2rem;
+        }
 
         .nav_group input {
             width: 100%;
@@ -33,15 +43,18 @@
         }
 
         .nav_group button {
-            padding: 0.5rem 1rem;
-            border: 1px solid #ccc;
-            background-color: #ffffff;
-            color: #333;
+            padding: 0.5rem 0.5rem;
+            border-radius: 50%;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+        }
 
+        .nav_group button:hover {
+            background-color: #e0e0e0;
         }
 
 
-        
 
         .radio-group {
             margin-top: 1rem;
@@ -74,7 +87,7 @@
         .hidden {
             display: none;
         }
-
+/*
         button {
             border: 1px solid #e0e0e0;
             border-radius: 6px;
@@ -84,6 +97,7 @@
             font-size: 16px;
             cursor: pointer;
         }
+*/
     </style>
 </head>
 
@@ -95,8 +109,16 @@
         <input type="text" id="search" placeholder="Search location...">
         <div class="page_group">
             <label id="page_label">Page 1 of 1</label>
-            <button type="button" id="prev_btn">Previous</button>
-            <button type="button" id="next_btn">Next</button>
+            <button type="button" id="prev_btn">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="prev_svg">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                </svg>
+            </button>
+            <button type="button" id="next_btn">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="next_svg">
+                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                </svg>
+            </button>
         </div>
     </div>
 
@@ -150,7 +172,13 @@
             });
             max_page = Math.ceil((count - 1) / page_size)
             if (count_max < count) { count_max == count }
-            document.getElementById('page_label').innerHTML = `showing ${count_min + 1} - ${count_max} of ${count-1}`
+            document.getElementById('page_label').innerHTML = `showing ${count_min + 1} - ${count_max} of ${count - 1}`
+
+            if (current_page == max_page) {document.getElementById('next_svg').style.stroke = '#e0e0e0' 
+            } else {document.getElementById('next_svg').style.stroke = '#333' }
+
+            if (current_page == 1) {document.getElementById('prev_svg').style.stroke = '#e0e0e0' 
+            } else {document.getElementById('prev_svg').style.stroke = '#333' }
         }
 
         document.getElementById('next_btn').addEventListener('click', () => {
