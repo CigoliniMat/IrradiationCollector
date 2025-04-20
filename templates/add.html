@@ -58,30 +58,30 @@
 
 <body>
     <h1>Create new location</h1>
-    <form>
+    <form action="/add_location" method="post">
         <div class="name_container">
             <label>
                 <strong>Location name:</strong>
             </label>
-            <input type="text" required placeholder="Insert location name" >
+            <input type="text" name="name" required placeholder="Insert location name" >
         </div>
         <div class="lat_container">
             <label>
                 <strong>Latitude:</strong>
             </label>
-            <input type="number" step="0.01" placeholder="Example: 45.3456" required >
+            <input type="number" name="lat" step="0.0001" placeholder="Example: 45.3456" required >
         </div>
         <div class="lon_container">
             <label>
                 <strong>Longitude:</strong>
             </label>
-            <input type="number" step="0.01" placeholder="Example: 10.4567" required>
+            <input type="number" name="lon" step="0.0001" placeholder="Example: 10.4567" required>
         </div>
         <div class="description_container">
             <label>
                 <strong>Description:</strong>
             </label>
-            <textarea rows="2" cols="50" placeholder="An opzional brief description"></textarea>
+            <textarea name="description" rows="2" cols="50" placeholder="An opzional brief description"></textarea>
         </div>
         <button type="submit">
             <strong>Create</strong>

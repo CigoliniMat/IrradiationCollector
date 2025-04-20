@@ -1,15 +1,18 @@
 from flask import Flask, render_template, request
+import script as f
 
 app = Flask(__name__)
 
 @app.route('/')
-def show_list():
-    locations_list = [
-        {'ID':1,'name': 'Orzivecchi (BS)', 'lat': 10.2555, 'lon':45.4555},
-        {'ID':2,'name': 'Settimo Torinese (TO)', 'lat': 10.2555, 'lon':45.4555},
-        {'ID':3,'name': 'Dolcè (VR)', 'lat': 10.2555, 'lon':45.4555},
-    ]*20
-    return render_template('list.html', locations_list=locations_list)
+def main():
+    locations_list = f.get_locations()
+    return render_template('main.html', locations_list=locations_list)
+
+@app.route('/add')
+def add():
+    return render_template('add.html')
+
+
 
 @app.route('/select_location', methods=['POST'])
 def select_location():
@@ -20,6 +23,16 @@ def select_location():
         return f"you select location: {selection}"
     else:
         return "you don't select any location"
+    
+@app.route('/add_location', methods=['POST'])
+def add_location():
+    name = request.form.getlist('name')[0]
+    lat = request.form.getlist('lat')[0]
+    lon = request.form.getlist('lon')[0]
+    description = request.form.getlist('description')[0]
+    validation = True
+    result = f.add_location(name, lat, lon, description)
+    return result
 
 if __name__ == '__main__':
     app.run(debug=True)

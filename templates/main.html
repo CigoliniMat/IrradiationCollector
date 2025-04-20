@@ -28,6 +28,8 @@
 
         }
 
+
+
         .nav_group .page_group {
             margin-left: 2rem;
         }
@@ -103,6 +105,7 @@
             font-size: 16px;
             cursor: pointer;
         }
+
     </style>
 </head>
 
@@ -113,7 +116,7 @@
 
         <input type="text" id="search" placeholder="Search location...">
         <div class="page_group">
-            <label id="page_label">Page 1 of 1</label>
+            <label id="page_label">showing x - x of x</label>
             <button type="button" id="prev_btn">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="prev_svg">
                     <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
@@ -131,8 +134,8 @@
         <div class="radio-group" id="radioGroup">
             {% for location in locations_list %}
             <label class="radio-container">
-                <input type="radio" name="selection" value="{{ location.ID }}">
-                <strong>{{location.name}}</strong>
+                <input type="radio" name="selection" value="{{ location[0] }}">
+                <strong>{{location[1]}}</strong>
             </label>
             {% endfor %}
         </div>
@@ -141,7 +144,7 @@
             <button type="submit">
                 <strong>Go to irradiation &#8594;</strong>
             </button>
-            <button type="button" onclick="window.location.href='add.html'">
+            <button type="button" onclick="window.location.href='add'">
                 <strong>Add new location &#65291;</strong>
             </button>
             <button type="button">
@@ -161,9 +164,9 @@
         let max_page = Math.ceil(radios.length / page_size)
         let current_page = min_page
 
-        function filter_page() {
+        function filter_page() { 
             const query = search_input.value.toLowerCase();
-
+            
             let count = 1
             let count_min = 0
             let count_max = 0
@@ -185,8 +188,8 @@
                 }
             });
             max_page = Math.ceil((count - 1) / page_size)
-            if (count_max < count) { count_max == count }
-            document.getElementById('page_label').innerHTML = `showing ${count_min + 1} - ${count_max} of ${count - 1}`
+            if (count_max > count) { count_max = count }
+            document.getElementById('page_label').innerHTML = `showing ${count_min + 1} - ${count_max - 1} of ${count - 1}`
 
             if (current_page == max_page) {
                 document.getElementById('next_svg').style.stroke = '#e0e0e0'
