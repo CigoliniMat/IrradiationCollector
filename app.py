@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import script as f
 
 app = Flask(__name__)
@@ -26,13 +26,16 @@ def select_location():
     
 @app.route('/add_location', methods=['POST'])
 def add_location():
-    name = request.form.getlist('name')[0]
-    lat = request.form.getlist('lat')[0]
-    lon = request.form.getlist('lon')[0]
-    description = request.form.getlist('description')[0]
+    name = request.form['name']
+    lat = request.form['lat']
+    lon = request.form['lon']
+    description = request.form.get('description','')
     validation = True
     result = f.add_location(name, lat, lon, description)
-    return result
+
+
+    return jsonify({'message': result}), 200
+
 
 if __name__ == '__main__':
     app.run(debug=True)

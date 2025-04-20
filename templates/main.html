@@ -188,16 +188,19 @@
                 }
             });
             max_page = Math.ceil((count - 1) / page_size)
-            if (count_max > count) { count_max = count }
-            document.getElementById('page_label').innerHTML = `showing ${count_min + 1} - ${count_max - 1} of ${count - 1}`
 
-            if (current_page == max_page) {
+            if (count_max > count) { count_max = count-1 }
+            
+            document.getElementById('page_label').innerHTML = `showing ${count_min + 1} - ${count_max} of ${count - 1}`
+
+            if (current_page == max_page || count==1) {
                 document.getElementById('next_svg').style.stroke = '#e0e0e0'
             } else { document.getElementById('next_svg').style.stroke = '#333' }
 
-            if (current_page == 1) {
+            if (current_page == 1 || count==1) {
                 document.getElementById('prev_svg').style.stroke = '#e0e0e0'
             } else { document.getElementById('prev_svg').style.stroke = '#333' }
+
         }
 
         document.getElementById('next_btn').addEventListener('click', () => {
