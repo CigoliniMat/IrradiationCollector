@@ -17,7 +17,7 @@
             vertical-align: middle;
             width: 1rem;
             stroke: #333;
-            stroke-width:3;
+            stroke-width: 3;
         }
 
         .nav_group {
@@ -87,8 +87,14 @@
         .hidden {
             display: none;
         }
-/*
-        button {
+
+        .button_container {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        form button {
             border: 1px solid #e0e0e0;
             border-radius: 6px;
             background-color: #333;
@@ -97,7 +103,6 @@
             font-size: 16px;
             cursor: pointer;
         }
-*/
     </style>
 </head>
 
@@ -111,12 +116,12 @@
             <label id="page_label">Page 1 of 1</label>
             <button type="button" id="prev_btn">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="prev_svg">
-                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
                 </svg>
             </button>
             <button type="button" id="next_btn">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="next_svg">
-                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
                 </svg>
             </button>
         </div>
@@ -132,9 +137,18 @@
             {% endfor %}
         </div>
 
-        <button type="submit">Go to irradiation</button>
-        <button type="button">Add new location</button>
-        <button type="button">Update all location</button>
+        <div class="button_container">
+            <button type="submit">
+                <strong>Go to irradiation &#8594;</strong>
+            </button>
+            <button type="button" onclick="window.location.href='add.html'">
+                <strong>Add new location &#65291;</strong>
+            </button>
+            <button type="button">
+                <strong>Update all location &#128260;</strong>
+            </button>
+        </div>
+
     </form>
 
     <script>
@@ -142,7 +156,7 @@
         const search_input = document.getElementById('search');
         const radios = radio_group.querySelectorAll('.radio-container');
 
-        const page_size = 2
+        const page_size = 5
         const min_page = 1
         let max_page = Math.ceil(radios.length / page_size)
         let current_page = min_page
@@ -174,11 +188,13 @@
             if (count_max < count) { count_max == count }
             document.getElementById('page_label').innerHTML = `showing ${count_min + 1} - ${count_max} of ${count - 1}`
 
-            if (current_page == max_page) {document.getElementById('next_svg').style.stroke = '#e0e0e0' 
-            } else {document.getElementById('next_svg').style.stroke = '#333' }
+            if (current_page == max_page) {
+                document.getElementById('next_svg').style.stroke = '#e0e0e0'
+            } else { document.getElementById('next_svg').style.stroke = '#333' }
 
-            if (current_page == 1) {document.getElementById('prev_svg').style.stroke = '#e0e0e0' 
-            } else {document.getElementById('prev_svg').style.stroke = '#333' }
+            if (current_page == 1) {
+                document.getElementById('prev_svg').style.stroke = '#e0e0e0'
+            } else { document.getElementById('prev_svg').style.stroke = '#333' }
         }
 
         document.getElementById('next_btn').addEventListener('click', () => {
