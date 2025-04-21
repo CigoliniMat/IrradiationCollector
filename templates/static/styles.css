@@ -1,0 +1,106 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f5f7fa;
+    padding: 2rem;
+    color: #333;
+}
+
+.svg_arrow {
+    overflow: hidden;
+    vertical-align: middle;
+    width: 1rem;
+    stroke: #333;
+    stroke-width: 3;
+}
+
+.nav_group {
+    display: flex;
+    flex-direction: row;
+    justify-content: baseline;
+    flex-wrap: wrap;
+
+}
+
+.nav_group .page_group {
+    margin-left: 2rem;
+}
+
+
+.input_lbl_container {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    align-items: center;
+}
+
+.user_input {
+    width: 100%;
+    max-width: 600px;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    font-family: inherit;
+}
+
+.button_container {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.action_btn {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    background-color: #333;
+    color: #e0e0e0;
+    padding: 1rem;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.nav_group button {
+    padding: 0.5rem 0.5rem;
+    border-radius: 50%;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.nav_group button:hover {
+    background-color: #e0e0e0;
+}
+
+.radio-group {
+    margin-top: 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.radio-container {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.radio-container:last-child {
+    border-bottom: none;
+}
+
+.radio-container:hover {
+    background-color: #f9f9f9;
+}
+
+.radio-container input {
+    margin-right: 1rem;
+}
+
+.hidden {
+    display: none;
+}
