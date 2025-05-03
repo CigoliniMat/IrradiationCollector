@@ -38,7 +38,3 @@ def insert_irradiation(start_date, end_date):
     return #give output if all OK
 
 
-
-
-insert_irradiation('2025-04-01','2026-04-01')
-

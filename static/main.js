@@ -1,6 +1,7 @@
 const radio_group = document.getElementById('radioGroup');
 const search_input = document.getElementById('search');
 const radios = radio_group.querySelectorAll('.radio-container');
+const add_form = document.getElementById('add_form')
  
 const page_size = 5
 const min_page = 1
@@ -75,7 +76,26 @@ document.getElementById('prev_btn').addEventListener('click', () => {
     }
 });
 
-
-
 document.addEventListener('DOMContentLoaded', filter_page)
 search_input.addEventListener('input', filter_page)
+
+add_form.addEventListener('submit', async (event) =>{
+    event.preventDefault();
+
+    const form_data = new FormData(add_form)
+    const response = await fetch(add_form.action, {
+        method: 'POST',
+        body: form_data
+
+    });
+
+    const result = await response.json()
+
+    alert(result['message'])
+    close_modal()
+
+}
+
+
+
+)
