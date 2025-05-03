@@ -47,7 +47,6 @@ body {
     margin-left: 2rem;
 }
 
-
 .input_lbl_container {
     width: 100%;
     max-width: 800px;
@@ -134,6 +133,9 @@ body {
 .radio-container input {
     margin-right: 1rem;
 }
+
+small {margin: 0;
+    margin-left: 1rem;}
 
 .hidden {
     display: none;

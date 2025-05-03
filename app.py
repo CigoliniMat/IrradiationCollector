@@ -12,8 +12,6 @@ def main():
 def add():
     return render_template('add.html')
 
-
-
 @app.route('/select_location', methods=['POST'])
 def select_location():
     selection = request.form.getlist('selection')
@@ -30,11 +28,14 @@ def add_location():
     lat = request.form['lat']
     lon = request.form['lon']
     description = request.form.get('description','')
-    validation = True
+    validation = True #
     result = f.add_location(name, lat, lon, description)
+    if result == 'location added succesfully':
+        result = f.get_locations()
 
 
-    return jsonify({'message': result}), 200
+
+    return jsonify(result), 200
 
 
 if __name__ == '__main__':
