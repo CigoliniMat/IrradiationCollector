@@ -2,13 +2,13 @@ import cdsapi
 import csv
 import os
 
-def irradiation(lon, lat, start_day, end_day, file_position):
+def irradiation(lon, lat, start_day, end_day, file_position="temp/DeleteMe.csv"):
     '''Input example:
     lon / lon = 10.00
     start_day / end_day = "2024-01-01" #format YYYY-MM-DD
-    file_position = "Example.csv" #irrilevant, get removed after reading the file'''
+    file_position = "Example.csv" #irrilevant, get removed after reading the file
 
-    '''Output example:
+    Output example:
     {'2024-01-01': {'GHI': 100.02, 'DNI': 50.02054, 'DHI': 30, 'BNI': 20},
     '2024-01-02': {'GHI': 110, 'DNI': 60, 'DHI': 40, 'BNI': 25}}'''
     #check if target file exists, if yes remove it
@@ -19,13 +19,13 @@ def irradiation(lon, lat, start_day, end_day, file_position):
     client = cdsapi.Client()
     dataset = 'cams-solar-radiation-timeseries'
     target = file_position
-    params = {'sky_type': 'observed_cloud',
-                'location': {'longitude': lon, 'latitude': lat},
-                'altitude': ['-999.'], #???
-                'date': [f'{start_day}/{end_day}'],
-                'time_step': '1day', #options = 1minute, 15minute, 1hour, 1day, 1month
-                'time_reference': 'universal_time', #universal_time or true_solar_time, irrilevant
-                'format': 'csv' #now CSV, but if i learn how to read cdf file, can switch to NETCDF
+    params = {"sky_type": "observed_cloud",
+                "location": {"longitude": lon, "latitude": lat},
+                "altitude": ["-999."], #???
+                "date": [f"{start_day}/{end_day}"],
+                "time_step": "1day", #options = 1minute, 15minute, 1hour, 1day, 1month
+                "time_reference": "universal_time", #universal_time or true_solar_time, irrilevant
+                "format": "csv" #now CSV, but if i learn how to read cdf file, can switch to NETCDF
                 }
     client.retrieve(dataset, params, target)
 
@@ -66,9 +66,3 @@ def coordinate(town, country):
     {'lon': 12.4964, 'lat': 41.9028}'''
     #add api key and check if the API is available
     pass
-
-lon = 10
-lat = 45
-start_day = '2024-01-01' #format YYYY-MM-DD
-end_day = '2025-01-01'
-file_position = 'Example.csv' #name and position where the file from the API will be saved

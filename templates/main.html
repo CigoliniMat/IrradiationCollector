@@ -5,109 +5,6 @@
     <meta charset="UTF-8">
     <title>Saved locations</title>
     <link rel="stylesheet" href="static/styles.css">
-    <style>
-        /*
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f5f7fa;
-            padding: 2rem;
-            color: #333;
-        }
-
-        svg {
-            overflow: hidden;
-            vertical-align: middle;
-            width: 1rem;
-            stroke: #333;
-            stroke-width: 3;
-        }
-
-        .nav_group {
-            display: flex;
-            flex-direction: row;
-            justify-content: baseline;
-            flex-wrap: wrap;
-
-        }
-
-
-
-        .nav_group .page_group {
-            margin-left: 2rem;
-        }
-
-        .nav_group input {
-            width: 100%;
-            max-width: 400px;
-            padding: 0.5rem 1rem;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 16px;
-
-        }
-        .nav_group button {
-            padding: 0.5rem 0.5rem;
-            border-radius: 50%;
-            border: none;
-            background-color: transparent;
-            cursor: pointer;
-        }
-
-        .nav_group button:hover {
-            background-color: #e0e0e0;
-        }
-
-
-
-        .radio-group {
-            margin-top: 1rem;
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            background: #fff;
-            overflow: hidden;
-        }
-
-        .radio-container {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            border-bottom: 1px solid #eee;
-            cursor: pointer;
-        }
-
-        .radio-container:last-child {
-            border-bottom: none;
-        }
-
-        .radio-container:hover {
-            background-color: #f9f9f9;
-        }
-
-        .radio-container input {
-            margin-right: 1rem;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .button_container {
-            margin-top: 1rem;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        form button {
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            background-color: #333;
-            color: #e0e0e0;
-            padding: 1rem;
-            font-size: 16px;
-            cursor: pointer;
-        }
-*/
-    </style>
 </head>
 
 <body>
@@ -143,17 +40,52 @@
 
         <div class="button_container">
             <button type="submit" class="action_btn">
-                <strong>Go to irradiation &#8594;</strong>
+                <strong>Download CSV</strong>
             </button>
-            <button type="button" onclick="window.location.href='add'" class="action_btn">
-                <strong>Add new location &#65291;</strong>
+            <button type="button" onclick="open_modal()" class="action_btn">
+                <strong>Add new location</strong>
             </button>
             <button type="button" class="action_btn">
-                <strong>Update all location &#128260;</strong>
+                <strong>Update all location</strong>
             </button>
         </div>
-
     </form>
+
+    <div class="modal" id="modal">
+        <form class="modal-content">
+            <span class="close_button" onclick="close_modal()">&times;</span>
+            <h2>Add new location</h2>
+            <div class="input_lbl_container">
+                <label>
+                    <strong>Location name:</strong>
+                </label>
+                <input class="user_input" type="text" name="name" required placeholder="Insert location name">
+            </div>
+            <div class="input_lbl_container">
+                <label>
+                    <strong>Latitude:</strong>
+                </label>
+                <input class="user_input" type="number" name="lat" step="0.0001" placeholder="Example: 45.3456" required >
+            </div>
+            <div class="input_lbl_container">
+                <label>
+                    <strong>Longitude:</strong>
+                </label>
+                <input class="user_input" type="number" name="lon" step="0.0001" placeholder="Example: 10.4567" required>
+            </div>
+            <div class="input_lbl_container">
+                <label>
+                    <strong>Description:</strong>
+                </label>
+                <textarea class="user_input" name="description" rows="2" cols="50" placeholder="An optional brief description"></textarea>
+            </div>
+            <button type="submit" class="action_btn">
+                <strong>Create</strong>
+            </button>
+
+        </form>
+
+    </div>
 
     <script src="static/main.js"></script>
 

@@ -73,21 +73,26 @@ def insert_irradiation_data(db_name, id, dict_irradiation):
     cursor = conn.cursor()
 
     cursor.execute(f"""
-    CREATE TABLE IF NOT EXISTS daily_irr_{id} (
+    CREATE TABLE IF NOT EXISTS location_{id} (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    date TEXT NOT NULL,
-    GHI REAL NOT NULL,
-    DNI REAL NOT NULL,
-    DHI REAL NOT NULL,
-    BNI REAL NOT NULL
+    date TEXT UNIQUE,
+    GHI REAL,
+    BHI REAL,
+    DHI REAL,
+    BNI REAL
     );
     """)
 
     for date, values in dict_irradiation.items():
         cursor.execute(f'''
-            INSERT INTO location_{id} (date, GHI, DNI, DHI, BNI)
+            INSERT INTO location_{id} (date, GHI, BHI, DHI, BNI)
             VALUES (?, ?, ?, ?, ?)
-        ''', (date, values['GHI'], values['DNI'], values['DHI'], values['BNI']))
+            ON CONFLICT(date) DO UPDATE SET
+            GHI = excluded.GHI,
+            BHI = excluded.BHI,
+            DHI = excluded.DHI,
+            BNI = excluded.BNI
+        ''', (date, values['GHI'], values['BHI'], values['DHI'], values['BNI']))
 
     conn.commit()
     conn.close()
@@ -114,3 +119,26 @@ def get_location_list(db_name):
 
     conn.close()
     return rows
+
+def get_location_info(db_name, id):
+    location_column = ['id','name','lon','lat','description']
+    conn = sqlite3.connect(db_name)
+    cursor = conn.cursor()
+
+    cursor.execute(f'SELECT * FROM locations WHERE id = {id}')
+    row = cursor.fetchone()
+    conn.close()
+    if not row:
+        return #give output for id not found
+
+    output = dict(zip(location_column,row))
+    return output
+
+def delete_table(db_name, table_name):
+    conn = sqlite3.connect(db_name)
+    cursor = conn.cursor()
+    cursor.execute(f"DROP TABLE IF EXISTS {table_name}")
+    conn.commit()
+    conn.close()
+
+#delete_table('database.db', 'location_1')

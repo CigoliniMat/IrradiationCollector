@@ -1,7 +1,7 @@
 const radio_group = document.getElementById('radioGroup');
 const search_input = document.getElementById('search');
 const radios = radio_group.querySelectorAll('.radio-container');
-
+ 
 const page_size = 5
 const min_page = 1
 let max_page = Math.ceil(radios.length / page_size)
@@ -45,6 +45,15 @@ function filter_page() {
     } else { document.getElementById('prev_svg').style.stroke = '#333' }
 
 }
+
+function open_modal(){
+    document.getElementById('modal').style.display = 'block'
+}
+
+function close_modal(){
+    document.getElementById('modal').style.display = 'none'
+}
+
 
 document.getElementById('next_btn').addEventListener('click', () => {
     if (current_page < max_page) {

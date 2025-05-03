@@ -1,6 +1,7 @@
 #script unify command to send to app.py
 import utils.api as api
 import utils.db_helper as db
+import json
 
 db_name = 'database.db'
 
@@ -21,3 +22,23 @@ def add_location (name,lat,lon,description,validation=True):
         return f'error while adding the location to the database,\nerror type: {type(e).__name__} error message: {e}'
     
     return 'location added succesfully'
+
+def insert_irradiation(start_date, end_date):
+    '''
+    With the ID get the lat and lon, then download the irradiation and save in the database
+    '''
+    location_list = db.get_location_list(db_name)
+    for location in location_list:
+        lat = location[3]
+        lon = location[2]
+        location_id = location[0]
+        irradiation_values = api.irradiation(lon,lat,start_date,end_date)
+        db.insert_irradiation_data(db_name,location_id,irradiation_values)
+
+    return #give output if all OK
+
+
+
+
+insert_irradiation('2025-04-01','2026-04-01')
+
