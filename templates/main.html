@@ -42,12 +42,16 @@
             <button type="submit" class="action_btn">
                 <strong>Download CSV</strong>
             </button>
-            <button type="button" onclick="open_modal()" class="action_btn">
-                <strong>Add new location</strong>
-            </button>
             <button type="button" class="action_btn">
                 <strong>Update all location</strong>
             </button>
+            <button type="button" onclick="open_modal()" class="secondary_btn">
+                <strong>Add new location</strong>
+            </button>
+            <button type="button" class="secondary_btn">
+                <strong>Delete location</strong>
+            </button>
+
         </div>
     </form>
 
@@ -56,25 +60,25 @@
             <span class="close_button" onclick="close_modal()">&times;</span>
             <h2>Add new location</h2>
             <div class="input_lbl_container">
-                <label>
+                <label class="input_lbl">
                     <strong>Location name:</strong>
                 </label>
                 <input class="user_input" type="text" name="name" required placeholder="Insert location name">
             </div>
             <div class="input_lbl_container">
-                <label>
+                <label class="input_lbl">
                     <strong>Latitude:</strong>
                 </label>
                 <input class="user_input" type="number" name="lat" step="0.0001" placeholder="Example: 45.3456" required >
             </div>
             <div class="input_lbl_container">
-                <label>
+                <label class="input_lbl">
                     <strong>Longitude:</strong>
                 </label>
                 <input class="user_input" type="number" name="lon" step="0.0001" placeholder="Example: 10.4567" required>
             </div>
             <div class="input_lbl_container">
-                <label>
+                <label class="input_lbl">
                     <strong>Description:</strong>
                 </label>
                 <textarea class="user_input" name="description" rows="2" cols="50" placeholder="An optional brief description"></textarea>
@@ -82,6 +86,7 @@
             <button type="submit" class="action_btn">
                 <strong>Create</strong>
             </button>
+
 
         </form>
 

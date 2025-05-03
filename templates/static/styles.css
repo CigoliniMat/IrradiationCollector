@@ -56,7 +56,9 @@ body {
     margin-bottom: 1rem;
     align-items: center;
 }
-
+.input_lbl {
+    width: 30%;
+}
 .user_input {
     width: 100%;
     max-width: 600px;
@@ -78,6 +80,16 @@ body {
     border-radius: 6px;
     background-color: #333;
     color: #e0e0e0;
+    padding: 1rem;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.secondary_btn {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    background-color: #e0e0e0;
+    color: #333;
     padding: 1rem;
     font-size: 16px;
     cursor: pointer;

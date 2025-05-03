@@ -54,6 +54,12 @@ function close_modal(){
     document.getElementById('modal').style.display = 'none'
 }
 
+window.onclick = function(event) {
+    const modale = document.getElementById('modal');
+    if (event.target === modale) {
+        close_modal();
+    }
+  }
 
 document.getElementById('next_btn').addEventListener('click', () => {
     if (current_page < max_page) {
