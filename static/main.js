@@ -2,6 +2,8 @@ const radio_group = document.getElementById('radioGroup');
 const search_input = document.getElementById('search');
 let radios = radio_group.querySelectorAll('.radio-container');
 const add_form = document.getElementById('add_form')
+const location_form = document.getElementById('location_form')
+let api_running = false
 
 const page_size = 5
 const min_page = 1
@@ -125,3 +127,56 @@ add_form.addEventListener('submit', async (event) => {
     filter_page()
     close_modal()
 })
+
+location_form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const pressed_button = document.activeElement;
+    const action = pressed_button.value
+    const selected_location = new FormData(location_form)
+
+    if (action == 'download_csv') {
+        pressed_button.innerHTML = '<strong>downloading csv...</strong>'
+        pressed_button.classList.add('working_btn')
+        pressed_button.disabled = true
+        const response = await fetch('/download_csv', {
+            method: 'POST',
+            body: selected_location
+        })
+        const result = await response.json()
+        pressed_button.classList.remove('working_btn')
+        pressed_button.disabled = false
+        pressed_button.innerHTML = '<strong>Update location data</strong>'
+    } else if (action == 'update_api') {
+
+        pressed_button.innerHTML = '<strong>Updating data...</strong>'
+        pressed_button.classList.add('working_btn')
+        pressed_button.disabled = true
+        const response = await fetch('/update_api', {
+            method: 'POST',
+            body: selected_location
+        })
+        const result = await response.json()
+        pressed_button.classList.remove('working_btn')
+        pressed_button.disabled = false
+        pressed_button.innerHTML = '<strong>Update location data</strong>'
+
+    } else if (action == 'delete') {
+        const sel = document.querySelector('input[name="selection"]:checked')
+        if (sel) {
+            const txt = sel.parentElement.querySelector('strong').textContent
+            const conf = confirm(`delete location ${txt}?`);
+            if (conf) {
+                const response = await fetch('/delete_location', {
+                    method: 'POST',
+                    body: selected_location
+                })
+                const result = await response.json()
+            }
+        }
+
+    }
+
+}
+
+)

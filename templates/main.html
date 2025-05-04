@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <h1>Select the location</h1>
+    <h1>Location list</h1>
 
     <div class="nav_group">
 
@@ -27,8 +27,8 @@
             </button>
         </div>
     </div>
-
-    <form action="/select_location" method="post">
+<!--action="/select_location" method="post" -->
+    <form  id="location_form">
         <div class="radio-group" id="radioGroup">
             {% for location in locations_list %}
             <label class="radio-container">
@@ -41,16 +41,16 @@
         </div>
 
         <div class="button_container">
-            <button type="submit" class="action_btn">
+            <button type="submit" class="action_btn" name="action" value="download_csv">
                 <strong>Download CSV</strong>
             </button>
-            <button type="button" class="action_btn">
-                <strong>Update all location</strong>
+            <button type="submit" class="action_btn" name="action" value="update_api">
+                <strong>Update location data</strong>
             </button>
             <button type="button" onclick="open_modal()" class="secondary_btn">
                 <strong>Add new location</strong>
             </button>
-            <button type="button" class="secondary_btn">
+            <button type="submit" class="secondary_btn" name="action" value="delete">
                 <strong>Delete location</strong>
             </button>
 
@@ -83,7 +83,7 @@
                 <label class="input_lbl">
                     <strong>Description:</strong>
                 </label>
-                <textarea class="user_input" name="description" rows="2" cols="50" placeholder="An optional brief description"></textarea>
+                <input class="user_input" name="description" placeholder="An optional brief description"></input>
             </div>
             <button type="submit" class="action_btn">
                 <strong>Create</strong>

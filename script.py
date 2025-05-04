@@ -37,4 +37,8 @@ def insert_irradiation(start_date, end_date):
 
     return #give output if all OK
 
+def delete_location(location_id):
+    pass
 
+def download_csv(location_id):
+    pass
