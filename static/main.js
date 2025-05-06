@@ -39,7 +39,8 @@ function create_list(location_list) {
             radio_group.appendChild(lbl)
 
         })
-}}
+    }
+}
 
 function filter_page() {
     const query = search_input.value.toLowerCase();
@@ -126,7 +127,7 @@ add_form.addEventListener('submit', async (event) => {
     const result = await response.json()
 
     create_list(result)
-    
+
     add_form.reset()
     filter_page()
     close_modal()
@@ -140,17 +141,36 @@ location_form.addEventListener('submit', async (event) => {
     const selected_location = new FormData(location_form)
 
     if (action == 'download_csv') {
-        pressed_button.innerHTML = '<strong>downloading csv...</strong>'
-        pressed_button.classList.add('working_btn')
-        pressed_button.disabled = true
+        pressed_button.innerHTML = '<strong>downloading csv...</strong>';
+        pressed_button.classList.add('working_btn');
+        pressed_button.disabled = true;
+
         const response = await fetch('/download_csv', {
             method: 'POST',
             body: selected_location
-        })
-        const result = await response.json()
-        pressed_button.classList.remove('working_btn')
-        pressed_button.disabled = false
-        pressed_button.innerHTML = '<strong>Update location data</strong>'
+        });
+
+        if (response.ok) {
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            const contentDisposition = response.headers.get('Content-Disposition');
+            const fileName = contentDisposition ? contentDisposition.split('filename=')[1].replace(/"/g, '') : 'locations.csv';
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        } else {
+            console.error('Failed to download CSV');
+        }
+
+        pressed_button.classList.remove('working_btn');
+        pressed_button.disabled = false;
+        pressed_button.innerHTML = '<strong>Download CSV</strong>'
+    
     } else if (action == 'update_api') {
 
         pressed_button.innerHTML = '<strong>Updating data...</strong>'

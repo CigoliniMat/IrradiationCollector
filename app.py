@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_file
 import script as f
 import time
 
@@ -42,15 +42,17 @@ def download_csv():
     if len(selection) > 0:
         selection = selection[0]
         selection = int(selection)
-        result = f'you select location: {selection}'
+        csv_path = f.download_csv(selection)
+        csv_path = f'temp/{csv_path}'
+        return send_file(csv_path, as_attachment=True), 200
+        
     else:
         result = "you don't select any location"
-    
-    return jsonify(result), 200
+        print(result)
     
 @app.route('/update_api', methods=['POST'])
 def update_api():
-    time.sleep(24)
+    f.insert_irradiation()
 
     result = True
     return jsonify(result), 200

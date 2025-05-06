@@ -147,3 +147,16 @@ def delete_location(db_name, location_id):
     cursor.execute(f"DELETE FROM locations WHERE ID ={location_id}")
     conn.commit()
     conn.close()
+
+def dowload_irradiation(db_name, location_id):
+    conn = sqlite3.connect(db_name)
+    cursor = conn.cursor()
+    try:
+        cursor.execute(f"SELECT * FROM location_{location_id}")
+        column_name = [description[0] for description in cursor.description]
+        row = cursor.fetchall()
+    except:
+        return False
+    conn.commit()
+    conn.close()
+    return column_name, row
