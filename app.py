@@ -61,7 +61,8 @@ def delete_location():
     if len(selection) > 0:
         selection = selection[0]
         selection = int(selection)
-        result = f'you select location: {selection}'
+        f.delete_location(selection)
+        result = f.get_locations()
     else:
         result = "you don't select any location"
     

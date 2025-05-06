@@ -10,6 +10,37 @@ const min_page = 1
 let max_page = Math.ceil(radios.length / page_size)
 let current_page = min_page
 
+function create_list(location_list) {
+    if (Array.isArray(location_list) == false) { alert(location_list) } else {
+        radio_group.innerHTML = ''
+        location_list.forEach(location => {
+            const lbl = document.createElement('label')
+            lbl.classList.add("radio-container")
+
+            const input = document.createElement("input")
+            input.type = "radio"
+            input.name = "selection"
+            input.value = location[0]
+
+            const strong = document.createElement("strong")
+            strong.textContent = location[1]
+
+            const small = document.createElement("small")
+            small.textContent = `[${location[2]} - ${location[3]}]`
+
+            const description = document.createElement("small")
+            description.textContent = location[4]
+
+            lbl.appendChild(input)
+            lbl.appendChild(strong)
+            lbl.appendChild(small)
+            lbl.appendChild(description)
+
+            radio_group.appendChild(lbl)
+
+        })
+}}
+
 function filter_page() {
     const query = search_input.value.toLowerCase();
     let radios = radio_group.querySelectorAll('.radio-container');
@@ -94,35 +125,8 @@ add_form.addEventListener('submit', async (event) => {
 
     const result = await response.json()
 
-    if (Array.isArray(result) == false) { alert(result) } else {
-        radio_group.innerHTML = ''
-        result.forEach(location => {
-            const lbl = document.createElement('label')
-            lbl.classList.add("radio-container")
-
-            const input = document.createElement("input")
-            input.type = "radio"
-            input.name = "selection"
-            input.value = location[0]
-
-            const strong = document.createElement("strong")
-            strong.textContent = location[1]
-
-            const small = document.createElement("small")
-            small.textContent = `[${location[2]} - ${location[3]}]`
-
-            const description = document.createElement("small")
-            description.textContent = location[4]
-
-            lbl.appendChild(input)
-            lbl.appendChild(strong)
-            lbl.appendChild(small)
-            lbl.appendChild(description)
-
-            radio_group.appendChild(lbl)
-
-        })
-    }
+    create_list(result)
+    
     add_form.reset()
     filter_page()
     close_modal()
@@ -172,7 +176,14 @@ location_form.addEventListener('submit', async (event) => {
                     body: selected_location
                 })
                 const result = await response.json()
-            }
+
+                create_list(result)
+
+                location_form.reset()
+                filter_page()
+                close_modal()
+
+            } else { console.debug("you don't select any location!") }
         }
 
     }

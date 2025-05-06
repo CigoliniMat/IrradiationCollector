@@ -38,7 +38,9 @@ def insert_irradiation(start_date, end_date):
     return #give output if all OK
 
 def delete_location(location_id):
-    pass
+    table_name = f'location_{location_id}'
+    db.delete_location(db_name, location_id)
+    db.delete_table(db_name, table_name)
 
 def download_csv(location_id):
     pass

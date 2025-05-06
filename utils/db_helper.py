@@ -141,4 +141,9 @@ def delete_table(db_name, table_name):
     conn.commit()
     conn.close()
 
-#delete_table('database.db', 'location_1')
+def delete_location(db_name, location_id):
+    conn = sqlite3.connect(db_name)
+    cursor = conn.cursor()
+    cursor.execute(f"DELETE FROM locations WHERE ID ={location_id}")
+    conn.commit()
+    conn.close()
