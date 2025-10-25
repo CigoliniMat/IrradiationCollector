@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Saved locations</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+
+<body>
+    <div class="body_container">
+        <h1>Location list</h1>
+
+        <div class="nav_group">
+            <input type="text" id="search" placeholder="Search location..." class="user_input">
+            <div class="page_group">
+                <label id="page_label">showing x - x of x</label>
+                <button type="button" id="prev_btn">
+                    <!--- thiese SVG was taken from SMA Ennexos monitoring website-->
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="prev_svg" class="svg_arrow">
+                        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+                    </svg>
+                </button>
+                <button type="button" id="next_btn">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="next_svg" class="svg_arrow">
+                        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <form id="location_form">
+            <div class="radio-group" id="radioGroup">
+                {% for location in locations_list %}
+                <label class="radio-container">
+                    <input type="radio" name="selection" value="{{ location[0] }}">
+                    <strong>{{location[1]}}</strong>
+                    <small>[{{location[2]}} - {{location[3]}}]</small>
+                    <small>{{location[4]}}</small>
+                </label>
+                {% endfor %}
+            </div>
+
+            <div class="button_container">
+                <button type="submit" class="action_btn" name="action" value="download_csv">
+                    <strong>Download CSV</strong>
+                </button>
+                <button type="submit" class="action_btn" name="action" value="update_api">
+                    <strong>Update location data</strong>
+                </button>
+                <button type="button" onclick="open_modal()" class="secondary_btn">
+                    <strong>Add new location</strong>
+                </button>
+                <button type="submit" class="secondary_btn" name="action" value="delete">
+                    <strong>Delete location</strong>
+                </button>
+
+            </div>
+        </form>
+
+        <div class="modal" id="modal">
+            <form class="modal-content" id="add_form" action="/add_location" method="post">
+                <span class="close_button" onclick="close_modal()">&times;</span>
+                <h2>Add new location</h2>
+                <div class="input_lbl_container">
+                    <label class="input_lbl">
+                        <strong>Location name:</strong>
+                    </label>
+                    <input class="user_input" type="text" name="name" required placeholder="Insert location name">
+                </div>
+                <div class="input_lbl_container">
+                    <label class="input_lbl">
+                        <strong>Latitude:</strong>
+                    </label>
+                    <input class="user_input" type="number" name="lat" step="0.0001" placeholder="Example: 45.3456"
+                        required>
+                </div>
+                <div class="input_lbl_container">
+                    <label class="input_lbl">
+                        <strong>Longitude:</strong>
+                    </label>
+                    <input class="user_input" type="number" name="lon" step="0.0001" placeholder="Example: 10.4567"
+                        required>
+                </div>
+                <div class="input_lbl_container">
+                    <label class="input_lbl">
+                        <strong>Description:</strong>
+                    </label>
+                    <input class="user_input" name="description" placeholder="An optional brief description"></input>
+                </div>
+                <button type="submit" class="action_btn">
+                    <strong>Create</strong>
+                </button>
+
+
+            </form>
+
+        </div>
+
+
+
+    </div>
+    <script src="static/main.js"></script>
+</body>
+
+</html>
