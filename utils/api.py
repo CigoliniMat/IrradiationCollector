@@ -2,7 +2,7 @@ import cdsapi
 import csv
 import os
 
-def irradiation(lon, lat, start_day, end_day, file_position="temp/DeleteMe.csv"):
+def irradiation(lon, lat, start_day, end_day, file_position="DeleteMe.csv"):
     '''Input example:
     lon / lon = 10.00
     start_day / end_day = "2024-01-01" #format YYYY-MM-DD
